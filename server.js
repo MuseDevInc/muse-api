@@ -1,17 +1,17 @@
 //DEPENDENCIES
 
 const express = require('express')
-require('dotenv').config()
+// require('dotenv').config()
 const app = express()
-app.set('port', process.env.PORT || 4000)
+const PORT = 4000
 // const SESSION_SECRET = process.env.SESSION_SECRET
-const bodyParser = require("body-parser")
-app.use(bodyParser.urlencoded({ extended: true }))
-const methodOverride = require('method-override')
-app.use(methodOverride('_method'))
+// const bodyParser = require("body-parser")
+// app.use(bodyParser.urlencoded({ extended: true }))
+// const methodOverride = require('method-override')
+// app.use(methodOverride('_method'))
 // const session = require('express-session')
-const mealController = require('./controllers/meal')
-const sessionController = require('./controllers/session')
+const museController = require('./controllers/muse')
+// const sessionController = require('./controllers/session')
 
 //MIDDLEWARE
 
@@ -49,11 +49,10 @@ const sessionController = require('./controllers/session')
 // }
 
 
-app.use('/muse', mealController)
-app.use('/session', sessionController)
+app.use('/muse', museController)
+// app.use('/session', sessionController)
 
-// app.get('/')
-app.listen(app.get('port') , () => {
-    console.log(`Working on port: ${app.get('port')}`)
+
+app.listen(PORT,() => {
+    console.log(`Listening on port ${PORT}` )
 })
-
