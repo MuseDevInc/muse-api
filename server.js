@@ -11,7 +11,7 @@ const PORT = 4000
 // app.use(methodOverride('_method'))
 // const session = require('express-session')
 const museController = require('./controllers/muse')
-// const sessionController = require('./controllers/session')
+const sessionController = require('./controllers/session')
 
 //MIDDLEWARE
 
@@ -50,7 +50,7 @@ const museController = require('./controllers/muse')
 
 
 app.use('/muse', museController)
-// app.use('/session', sessionController)
+app.use('/session', sessionController)
 
 
 app.listen(PORT,() => {
