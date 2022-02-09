@@ -36,7 +36,7 @@ router.get('/:id', (req,res) => {
           res.status(200).json(muse)
     }) 
 })
-
+//
 //Delete route
 
 router.delete('/:id', (req,res) => {
