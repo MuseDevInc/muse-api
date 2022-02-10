@@ -36,7 +36,7 @@ app.use((req,res,next) => {
 
     next()
 })
-
+//middleware for actions that require auth
 const authRequired = (req,res,next) => {
     if (req.session.loggedIn) {
         next()
