@@ -52,7 +52,7 @@ const authRequired = (req,res,next) => {
 
 app.use('/muse', museController)
 app.use('/session', sessionController)
-app.use('/spot', spotifyPingController)
+app.use('/', spotifyPingController)
 
 app.listen(app.get('port') , () => {
     console.log(`Working on port: ${app.get('port')}`)
