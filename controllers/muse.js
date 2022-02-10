@@ -38,7 +38,7 @@ router.get('/:id', (req,res) => {
 })
 //
 //Delete route
-
+//hello
 router.delete('/:id', (req,res) => {
     Muse.findByIdAndDelete(req.params.id, (error, muse) => {
         if (error) {
