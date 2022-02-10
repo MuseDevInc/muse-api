@@ -1,7 +1,7 @@
 const mongoose = require('../db/connection')
 
 
-const MuseSchema = new mongoose.Schema({
+const ProfileSchema = new mongoose.Schema({
     location:{type:String},
     aboutMe:{type:String},
     favGenres:[String],
@@ -16,7 +16,9 @@ const MuseSchema = new mongoose.Schema({
 
 })
 
+//User: log in info and username. Has a unique Muse with their music info
 
-const Muse = mongoose.model("Muse", MuseSchema)
 
-module.exports = Muse
+const Profile = mongoose.model("Profile", ProfileSchema)
+
+module.exports = Profile
