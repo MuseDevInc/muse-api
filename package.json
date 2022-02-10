@@ -14,6 +14,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "lyrics-finder": "^21.7.0",
+    "node-fetch": "^3.2.0",
     "spotify-web-api-node": "^5.0.2"
   }
 }
