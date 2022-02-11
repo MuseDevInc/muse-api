@@ -10,6 +10,8 @@ const SESSION_SECRET = process.env.SESSION_SECRET
 const session = require('express-session')
 const museController = require('./controllers/muse')
 const sessionController = require('./controllers/session')
+const conversationController = require('./controllers/conversations')
+const messageController = require('./controllers/messages')
 //MIDDLEWARE
 
 app.use(session({
@@ -48,8 +50,8 @@ const authRequired = (req,res,next) => {
 
 app.use('/muse', museController)
 app.use('/session', sessionController)
-
-
+app.use('/conversation', conversationController)
+app.use('/message', messageController)
 app.listen(app.get('port') , () => {
     console.log(`Working on port: ${app.get('port')}`)
 })
