@@ -37,8 +37,7 @@ router.post("/spotifyRefresh", (req, res) => {
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
     });
   
-    spotifyApi
-      .authorizationCodeGrant(code)
+    spotifyApi.clientCredentialsGrant()
       .then((data) => {
         res.json({
           accessToken: data.body.access_token,
