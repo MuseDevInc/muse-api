@@ -2,11 +2,21 @@
   "name": "muse-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "express-session": "^1.17.2",
+    "lyrics-finder": "^21.7.0",
+    "mongoose": "^6.2.1",
+    "spotify-web-api-node": "^5.0.2"
+  }
 }
