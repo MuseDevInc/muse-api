@@ -8,6 +8,8 @@ const cors = require('cors');
 const session = require('express-session')
 const museController = require('./controllers/muse')
 const sessionController = require('./controllers/session')
+const conversationController = require('./controllers/conversations')
+const messageController = require('./controllers/messages')
 const spotifyPingController = require('./controllers/spotifyPing')
 
 app.use(cors());
@@ -51,6 +53,8 @@ const authRequired = (req,res,next) => {
 
 app.use('/muse', museController)
 app.use('/session', sessionController)
+app.use('/conversation', conversationController)
+app.use('/message', messageController)
 app.use('/spot', spotifyPingController)
 
 app.listen(app.get('port') , () => {
