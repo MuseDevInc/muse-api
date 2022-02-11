@@ -2,14 +2,19 @@ const mongoose = require('../db/connection')
 
 
 const ProfileSchema = new mongoose.Schema({
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+
     location:{type:String},
     aboutMe:{type:String},
     favGenres:[String],
     favAlbum:{type:String, required:true},
     favArtist:{type:String, required:true},
-    favSong1:{type:String},
-    favSong2:{type:String},
-    favSong3:{type:String},
+    favSong1:{type:Object},
+    favSong2:{type:Object},
+    favSong3:{type:Object},
     swipedRight:[{type:String}],
     swipedLeft:[{type:String}]
 

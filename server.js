@@ -30,6 +30,7 @@ app.use(session({
 app.use((req,res,next) => {
     res.locals.username = req.session.username
     res.locals.loggedIn = req.session.loggedIn
+    res.locals.userId = req.session.userId
     next()
 })
 // //flash messaging
