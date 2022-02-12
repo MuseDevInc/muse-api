@@ -16,17 +16,17 @@ router.post('/login', async (req,res,next) => {
                 req.session.username = userToLogin.username
                 req.session.loggedIn = true
                 req.session.userId = userToLogin._id
-                res.status(200).json({message: "Successfully Signed In: " + userToLogin.username, status: 200, currentUsername: userToLogin.username, currentUserId: req.session.userId})
+                return res.status(200).json({message: "Successfully Signed In: " + userToLogin.username, status: 200, currentUsername: userToLogin.username, currentUserId: req.session.userId})
             }
             else {
                 //if invalid password
-                res.status(400).json({message: "Invalid Password", status: 400})
+                return res.status(400).json({message: "Invalid Password", status: 400})
             }
         }
         else {
             //if no user exists
             console.log('Expected output, no user exists!')
-            res.status(400).json({message: "Invalid Username of Password", status: 400})
+            return res.status(400).json({message: "Invalid Username of Password", status: 400})
         }
     } catch (err) {
         next(err)
@@ -52,7 +52,7 @@ router.post('/register', async (req,res,next) => {
                 req.session.username = createdUser.username
                 req.session.loggedIn = true
                 req.session.userId = createdUser._id
-                return res.status(200).json({message: "Successfully Signed up", currentUsername: createdUser.username, currentUserId: req.session.userId})
+                return res.status(200).json({message: "Successfully Signed up",status: 200,currentUsername: createdUser.username, currentUserId: req.session.userId})
             }
         }
         else {
@@ -67,9 +67,9 @@ router.post('/register', async (req,res,next) => {
 router.get('/logout', (req,res) => {
     req.session.destroy( err => {
         if(err) {
-            res.status(400).json({message: err.message})
+            return res.status(400).json({message: err.message})
         } else {
-            res.status(200).json({message: "Signed out successfuly"})
+            return res.status(200).json({message: "Signed out successfuly"})
         }
     })
 })
