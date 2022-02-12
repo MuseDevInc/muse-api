@@ -1,0 +1,83 @@
+[
+    {
+        "aboutMe" : "I love bread",
+        "favGenres" : [
+            "Pop", "Rock"
+        ],
+        "favAlbum" : "Nevermind",
+        "favSong1" : {
+            "track_id" : "5bm0CcD5R9Nj04QbMvwugt",
+            "artist" : "Drake",
+            "title" : "Started From the Bottom",
+            "uri" : "spotify:track:5bm0CcD5R9Nj04QbMvwugt",
+            "albumUrl" : "https://i.scdn.co/image/ab67616d0000b273a4dfa7122ec07fe3a1af22e7"
+        },
+        "favSong2" : {
+            "track_id" : "0gplL1WMoJ6iYaPgMCL0gX",
+            "artist" : "Adele",
+            "title" : "Easy On Me",
+            "uri" : "spotify:track:0gplL1WMoJ6iYaPgMCL0gX",
+            "albumUrl" : "https://i.scdn.co/image/ab67616d0000b27350dba34377a595e35f81b0e4"
+        },
+        "favSong3" : {
+            "track_id" : "4CkgMiMqZ5JzW9iYXSTMTL",
+            "artist" : "Taylor Swift",
+            "title" : "I Bet You Think About Me (feat. Chris Stapleton) (Taylor’s Version) (From The Vault)",
+            "uri" : "spotify:track:4CkgMiMqZ5JzW9iYXSTMTL",
+            "albumUrl" : "https://i.scdn.co/image/ab67616d0000b273318443aab3531a0558e79a4d"
+        },
+        "swipedRight" : [ ],
+        "swipedLeft" : [ ]
+    },
+    {
+        "aboutMe" : "Ugh I don't know",
+        "favGenres" : [
+            "P"
+        ],
+        "favAlbum" : "Nevermind",
+        "favSong1" : {
+            "track_id" : "3CA9pLiwRIGtUBiMjbZmRw",
+            "artist" : "Drake",
+            "title" : "Nice For What",
+            "uri" : "spotify:track:3CA9pLiwRIGtUBiMjbZmRw",
+            "albumUrl" : "https://i.scdn.co/image/ab67616d0000b273f907de96b9a4fbc04accc0d5"
+        },
+        "favSong2" : {
+            "track_id" : "5bm0CcD5R9Nj04QbMvwugt",
+            "artist" : "Drake",
+            "title" : "Started From the Bottom",
+            "uri" : "spotify:track:5bm0CcD5R9Nj04QbMvwugt",
+            "albumUrl" : "https://i.scdn.co/image/ab67616d0000b273a4dfa7122ec07fe3a1af22e7"
+        },
+        "swipedRight" : [ ],
+        "swipedLeft" : [ ]
+    },
+    {
+        "aboutMe" : "I don't work on Sundays",
+        "favGenres" : [ ],
+        "favAlbum" : "Nevermind",
+        "favSong1" : {
+            "track_id" : "35Dh5MnCUPLN3XyAVtQff3",
+            "artist" : "Chloe x Halle",
+            "title" : "Do It",
+            "uri" : "spotify:track:35Dh5MnCUPLN3XyAVtQff3",
+            "albumUrl" : "https://i.scdn.co/image/ab67616d0000b2736258cd821d868e64b74e44a5"
+        },
+        "favSong2" : {
+            "track_id" : "2BcMwX1MPV6ZHP4tUT9uq6",
+            "artist" : "Drake",
+            "title" : "Knife Talk (with 21 Savage ft. Project Pat)",
+            "uri" : "spotify:track:2BcMwX1MPV6ZHP4tUT9uq6",
+            "albumUrl" : "https://i.scdn.co/image/ab67616d0000b273cd945b4e3de57edd28481a3f"
+        },
+        "favSong3" : {
+            "track_id" : "6IZvVAP7VPPnsGX6bvgkqg",
+            "artist" : "Kendrick Lamar",
+            "title" : "PRIDE.",
+            "uri" : "spotify:track:6IZvVAP7VPPnsGX6bvgkqg",
+            "albumUrl" : "https://i.scdn.co/image/ab67616d0000b2738b52c6b9bc4e43d873869699"
+        },
+        "swipedRight" : [ ],
+        "swipedLeft" : [ ]
+    }
+]
