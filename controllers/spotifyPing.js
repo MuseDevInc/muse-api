@@ -40,7 +40,6 @@ router.post("/spotifyRefresh", (req, res) => {
       .then((data) => {
         res.json({
           accessToken: data.body.access_token,
-          refreshToken: data.body.refresh_token,
           expiresIn: data.body.expires_in,
         });
       })
