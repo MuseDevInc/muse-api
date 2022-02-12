@@ -16,20 +16,17 @@ router.post('/login', async (req,res,next) => {
                 req.session.username = userToLogin.username
                 req.session.loggedIn = true
                 req.session.userId = userToLogin._id
-                console.log('Logged in as ', userToLogin.username)
-                // res.redirect('/muse')
+                res.status(200).json({message: "Successfully Signed In: " + userToLogin.username, status: 200, currentUserId: req.session.userId})
             }
             else {
                 //if invalid password
-                req.session.message = "Invalid username or password"
-                // res.redirect('/session/login')
+                res.status(400).json({message: "Invalid Password", status: 400})
             }
         }
         else {
             //if no user exists
             console.log('Expected output, no user exists!')
-            req.session.message = "Invalid username or password"
-            // res.redirect('/session/login')
+            res.status(400).json({message: "Invalid Username of Password", status: 400})
         }
     } catch (err) {
         next(err)
@@ -45,8 +42,7 @@ router.post('/register', async (req,res,next) => {
             const userExists = await User.findOne({ username: desiredUsername})
             if (userExists){
                 //if no user exists
-                req.session.message = "Username already taken"
-            res.redirect('/session/register')
+                return res.status(400).json({message: "Username already taken", status: 400})
             }
             else {
                 const salt = bcrypt.genSaltSync(10)
@@ -56,14 +52,12 @@ router.post('/register', async (req,res,next) => {
                 req.session.username = createdUser.username
                 req.session.loggedIn = true
                 req.session.userId = createdUser._id
-                console.log(createdUser)
-                console.log('Expected person')
-                return res.json(createdUser)
+                return res.status(200).json({message: "Successfully Signed up", createdUsername: createdUser.username, currentUserId: req.session.userId})
             }
         }
         else {
-            req.session.message = "Passwords must match"
-        }
+            return res.status(400).json({message:"Passwords must match"})
+                }
     } catch (err) {
         next(err)
     }
@@ -71,8 +65,13 @@ router.post('/register', async (req,res,next) => {
 
 //LOG OUT
 router.get('/logout', (req,res) => {
-    req.session.destroy()
-    // res.redirect('/session/login')
+    req.session.destroy( err => {
+        if(err) {
+            res.status(400).json({message: err.message})
+        } else {
+            res.status(200).json({message: "Signed out successfuly"})
+        }
+    })
 })
 
 
