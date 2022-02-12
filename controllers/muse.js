@@ -7,14 +7,31 @@ const User = require('../models/user')
 
 
 router.get('/userPage', (req,res) => {
-    User.find({}, (error,user) => {
+    console.log('Hello I got hit', req.session.userId)
+    Profile.find({owner: req.session.userId}, (error, profile) => {
+        console.log(error, profile);
         if (error) {
             res.status(400).json({ error: error.message })
             next()
         }
-        //return user as json
-        res.status(200).json(user)
+        //return profile as json
+      return res.status(200).json(profile)
     })
+    // User.findById(req.session.userId, (error, user) => {
+    //     if (error) {
+    //         res.status(400).json({ error: error.message })
+    //         next()
+    //     }
+    //     Profile.find({owner: req.session.userId}, (error, profile) => {
+    //         if (error) {
+    //             res.status(400).json({ error: error.message })
+    //             next()
+    //         }
+    //         //return profile as json
+    //       return res.status(200).json(profile)
+
+    //     })
+    // })
 })
 // Page where User who has signed up creates their profile. This is not a register page.
 router.post('/userCreationPage', (req,res) => {
