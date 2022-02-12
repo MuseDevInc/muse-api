@@ -8,7 +8,7 @@ const User = require('../models/user')
 
 router.get('/userPage', (req,res) => {
     console.log('Hello I got hit', req.session.userId)
-    Profile.find({owner: req.session.userId}, (error, profile) => {
+    Profile.findOne({owner: req.session.userId}, (error, profile) => {
         console.log(error, profile);
         if (error) {
             res.status(400).json({ error: error.message })
