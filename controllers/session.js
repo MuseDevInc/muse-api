@@ -16,7 +16,7 @@ router.post('/login', async (req,res,next) => {
                 req.session.username = userToLogin.username
                 req.session.loggedIn = true
                 req.session.userId = userToLogin._id
-                res.status(200).json({message: "Successfully Signed In: " + userToLogin.username, status: 200, currentUserId: req.session.userId})
+                res.status(200).json({message: "Successfully Signed In: " + userToLogin.username, status: 200, currentUsername: userToLogin.username, currentUserId: req.session.userId})
             }
             else {
                 //if invalid password
@@ -52,7 +52,7 @@ router.post('/register', async (req,res,next) => {
                 req.session.username = createdUser.username
                 req.session.loggedIn = true
                 req.session.userId = createdUser._id
-                return res.status(200).json({message: "Successfully Signed up", createdUsername: createdUser.username, currentUserId: req.session.userId})
+                return res.status(200).json({message: "Successfully Signed up", currentUsername: createdUser.username, currentUserId: req.session.userId})
             }
         }
         else {
