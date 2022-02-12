@@ -29,8 +29,7 @@ router.post("/spotifyRefresh", (req, res) => {
   });
   
  router.post("/spotifyLogin", (req, res) => {
-    console.log("hi");
-    const code = req.body.code;
+    console.log("logged in on spotify");
     const spotifyApi = new SpotifyWebApi({
       redirectUri: process.env.REDIRECT_URI,
       clientId: process.env.SPOTIFY_CLIENT_ID,
