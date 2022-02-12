@@ -12,9 +12,13 @@ const ProfileSchema = new mongoose.Schema({
     favGenres:[String],
     favAlbum:{type:String},
     favArtist:{type:String},
-    favSong1:{type:Object, required:true},
-    favSong2:{type:Object},
-    favSong3:{type:Object},
+    favSongs: [{
+        title: String,
+        uri: String,
+        artist: String,
+        albumUrl: String
+
+    }],
     swipedRight:[{type:String}],
     swipedLeft:[{type:String}]
 
