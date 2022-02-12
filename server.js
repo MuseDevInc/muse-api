@@ -12,7 +12,13 @@ const conversationController = require('./controllers/conversations')
 const messageController = require('./controllers/messages')
 const spotifyPingController = require('./controllers/spotifyPing')
 
-app.use(cors());
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true,
+}
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(methodOverride('_method'))
@@ -24,6 +30,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }))
+
 // app.use(express.static('public'))
 
 //Make username available on all pages
@@ -52,8 +59,8 @@ const authRequired = (req,res,next) => {
     }
 }
 
-app.use('/muse', museController)
 app.use('/session', sessionController)
+app.use('/muse', museController)
 app.use('/conversation', conversationController)
 app.use('/message', messageController)
 app.use('/spot', spotifyPingController)
