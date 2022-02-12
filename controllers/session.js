@@ -7,8 +7,9 @@ const bcrypt = require('bcrypt')
 router.post('/login', async (req,res,next) => {
     //Check if user exists, if so then check if password correct.
     try {
-        //Check if user exists, if 
+        //Check if user exists
         const userToLogin = await User.findOne({username: req.body.username})
+        //  validate password if user exists
         if (userToLogin) {
             const validPassword = bcrypt.compareSync(req.body.password, userToLogin.password)
             if (validPassword) {
@@ -16,19 +17,19 @@ router.post('/login', async (req,res,next) => {
                 req.session.loggedIn = true
                 req.session.userId = userToLogin._id
                 console.log('Logged in as ', userToLogin.username)
-                res.redirect('/muse')
+                // res.redirect('/muse')
             }
             else {
                 //if invalid password
                 req.session.message = "Invalid username or password"
-                res.redirect('/session/login')
+                // res.redirect('/session/login')
             }
         }
         else {
             //if no user exists
             console.log('Expected output, no user exists!')
             req.session.message = "Invalid username or password"
-            res.redirect('/session/login')
+            // res.redirect('/session/login')
         }
     } catch (err) {
         next(err)
@@ -55,9 +56,9 @@ router.post('/register', async (req,res,next) => {
                 req.session.username = createdUser.username
                 req.session.loggedIn = true
                 req.session.userId = createdUser._id
-                res.redirect('/muse')
                 console.log(createdUser)
                 console.log('Expected person')
+                return res.json(createdUser)
             }
         }
         else {
@@ -71,7 +72,7 @@ router.post('/register', async (req,res,next) => {
 //LOG OUT
 router.get('/logout', (req,res) => {
     req.session.destroy()
-    res.redirect('/session/login')
+    // res.redirect('/session/login')
 })
 
 
