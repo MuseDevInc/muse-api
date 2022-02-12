@@ -3,7 +3,8 @@ const router = express.Router()
 const Profile = require('../models/profile')
 const User = require('../models/user')
 
-//USER PAGE
+// USER PAGE
+
 
 router.get('/userPage', (req,res) => {
     User.find({}, (error,user) => {
@@ -17,12 +18,25 @@ router.get('/userPage', (req,res) => {
 })
 // Page where User who has signed up creates their profile. This is not a register page.
 router.post('/userCreationPage', (req,res) => {
-    Profile.create(req.body, (error, createdProfile) => {
-        if (error) {
-            res.status(400).json({ error: error.message })
-          }
-          //return "Profile" info 
-          res.status(200).json(createdProfile)
+    console.log(req.session);
+    User.findById(req.session.userId, (err, user) => {
+        console.log(req.body);
+        if (err) {
+        }
+        let profileToCreate = {
+            ...req.body,
+            owner: req.session.userId
+        }
+        // console.log(profileToCreate);
+
+        Profile.create(profileToCreate, (error, createdProfile) => {
+            if (error) {
+                return res.status(400).json({ error: error.message })
+              }
+              //return "Profile" info 
+              return res.status(200).json(createdProfile)
+              
+        })
     })
 })
 
