@@ -3,35 +3,46 @@ const router = express.Router();
 const Profile = require("../models/profile");
 const User = require("../models/user");
 
-// USER PAGE
-
-router.get("/userPage", (req, res) => {
-  console.log("Hello I got hit", req.session.userId);
-  Profile.findOne({ owner: req.session.userId }, (error, profile) => {
-    console.log(error, profile);
+//Fetch for discover
+//Show individual user page, (Maybe not Profile?)
+router.get('/discover', (req,res) => {
+    Profile.find({}, (error,profiles) => {
     if (error) {
-      res.status(400).json({ error: error.message });
-      next();
-    }
-    //return profile as json
-    return res.status(200).json(profile);
-  });
-  // User.findById(req.session.userId, (error, user) => {
-  //     if (error) {
-  //         res.status(400).json({ error: error.message })
-  //         next()
-  //     }
-  //     Profile.find({owner: req.session.userId}, (error, profile) => {
-  //         if (error) {
-  //             res.status(400).json({ error: error.message })
-  //             next()
-  //         }
-  //         //return profile as json
-  //       return res.status(200).json(profile)
+        res.status(400).json({ error: error.message })
+      }
+      console.log(profiles)
+      res.status(200).json(profiles)
+}) 
+})
 
-  //     })
-  // })
-});
+// USER PAGE
+router.get('/userPage', (req,res) => {
+    console.log('Hello I got hit', req.session.userId)
+    Profile.findOne({owner: req.session.userId}, (error, profile) => {
+        console.log(error, profile);
+        if (error) {
+            res.status(400).json({ error: error.message })
+            next()
+        }
+        //return profile as json
+      return res.status(200).json(profile)
+    })
+    // User.findById(req.session.userId, (error, user) => {
+    //     if (error) {
+    //         res.status(400).json({ error: error.message })
+    //         next()
+    //     }
+    //     Profile.find({owner: req.session.userId}, (error, profile) => {
+    //         if (error) {
+    //             res.status(400).json({ error: error.message })
+    //             next()
+    //         }
+    //         //return profile as json
+    //       return res.status(200).json(profile)
+
+    //     })
+    // })
+})
 // Page where User who has signed up creates their profile. This is not a register page.
 router.post("/userCreationPage", (req, res) => {
   console.log(req.session);
