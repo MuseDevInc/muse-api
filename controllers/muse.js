@@ -15,6 +15,18 @@ router.get('/userPage', (req,res) => {
         res.status(200).json(user)
     })
 })
+//SPECIFIC USER PAGE
+
+router.get('/userPage/:id', (req,res) => {
+    User.findById((req.params.id), (error, user) => {
+        if (error) {
+            res.status(400).json({ error: error.message })
+            next()
+        }
+        //return user as json
+        res.status(200).json(user)
+    })
+})
 // Page where User who has signed up creates their profile. This is not a register page.
 router.post('/userCreationPage', (req,res) => {
     Profile.create(req.body, (error, createdProfile) => {
