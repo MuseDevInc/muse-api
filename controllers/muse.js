@@ -19,7 +19,6 @@ router.get('/discover', (req,res) => {
 router.get('/userPage', (req,res) => {
     console.log('Hello I got hit', req.session.userId)
     Profile.findOne({owner: req.session.userId}, (error, profile) => {
-        console.log(error, profile);
         if (error) {
             res.status(400).json({ error: error.message })
             next()
