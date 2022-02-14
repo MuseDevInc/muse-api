@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Profile = require("../models/profile");
 const User = require("../models/user");
-const mongoose = require("../db/connection");
+/* const mongoose = require('mongoose') */
 //Fetch for discover
 //Show individual user page, (Maybe not Profile?)
 
@@ -13,29 +13,47 @@ router.get("/discover/getQueue", (req, res) => {
     { owner: req.session.userId },
     "swipedLeft swipedRight",
     (error, swipedIds) => {
-
       //callback executes and concatenates swipedLeft, SwipeRight, and user's profile id
-      console.log(swipedIds);
       let excludeIds = swipedIds.swipedLeft.concat(
         swipedIds.swipedRight,
         swipedIds.id
       );
-      console.log(excludeIds);
       //return all docs that have an id included in "excludeIds"
-      Profile.find({ _id: { $ne: excludeIds } }, (error, unswiped) => {
-        console.log(excludeIds);
+      Profile.find({ _id: { $nin: excludeIds } }, (error, unswiped) => {
         if (error) {
           res.status(400).json({ error: error.message });
         }
-
-        console.log(unswiped + " have not been swiped");
         return res.status(200).json(unswiped);
       });
     }
   );
 });
-//patch currentUser with swipe
 
+//patch currentUser with swipe
+router.patch("/discover/swipe", (req, res) => {
+  console.log(req.body);
+  let { swipeDirection, swipedUser } = req.body;
+  Profile.find({ owner: req.session.userId}, {_id:1}, (error, profileId) => {
+      if (error) {
+          res.status(400).json({error: err.message})
+      } let profId = profileId[0]._id
+  Profile.findByIdAndUpdate(
+    profId,
+    {
+      $push: { [`swiped${swipeDirection}`]: swipedUser },
+    },
+    {new: true },
+    (err, doc) => {
+      console.log(doc);
+      if (err) {
+        return res.status("400");
+      } else {
+        return res.status(200).json(doc);
+      }
+    }
+  );
+});
+})
 // USER PAGE
 router.get("/userPage", (req, res) => {
   console.log("Hello I got hit", req.session.userId);
