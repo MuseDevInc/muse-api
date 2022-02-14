@@ -2,32 +2,35 @@ const express = require("express");
 const router = express.Router();
 const Profile = require("../models/profile");
 const User = require("../models/user");
-
+const mongoose = require("../db/connection");
 //Fetch for discover
 //Show individual user page, (Maybe not Profile?)
 
-router.get("/discover/:id", (req, res) => {
+router.get("/discover/getQueue", (req, res) => {
   console.log("discover hit");
   //return current user profile and return ids in swipedleft and swipedright arrays
   Profile.findOne(
     { owner: req.session.userId },
     "swipedLeft swipedRight",
     (error, swipedIds) => {
-        //callback executes and concatenates swipedLeft and SwipeRight
-      let swipedIdsArray = swipedIds.swipedLeft.concat(swipedIds.swipedRight);
-      //find all docs where no value in swipedIdsArray is present in id field
-      Profile.find(
-        { id: { $not: { $all: swipedIdsArray } } },
-        (error, unswiped) => {
-          console.log(swipedIdsArray);
-          if (error) {
-            res.status(400).json({ error: error.message });
-          }
-          //return all profile docs to app, userQueue will only include profile objects user has not swiped on previously.
-          console.log(unswiped + " have not been swiped");
-          return res.status(200).json(unswiped);
-        }
+
+      //callback executes and concatenates swipedLeft, SwipeRight, and user's profile id
+      console.log(swipedIds);
+      let excludeIds = swipedIds.swipedLeft.concat(
+        swipedIds.swipedRight,
+        swipedIds.id
       );
+      console.log(excludeIds);
+      //return all docs that have an id included in "excludeIds"
+      Profile.find({ _id: { $ne: excludeIds } }, (error, unswiped) => {
+        console.log(excludeIds);
+        if (error) {
+          res.status(400).json({ error: error.message });
+        }
+
+        console.log(unswiped + " have not been swiped");
+        return res.status(200).json(unswiped);
+      });
     }
   );
 });
