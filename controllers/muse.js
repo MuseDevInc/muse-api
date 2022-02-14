@@ -65,15 +65,20 @@ router.get("/:id", (req, res) => {
     res.status(200).json(profile);
   });
 });
-//
+
 //Delete route
 //hello
-router.delete("/:id", (req, res) => {
-  Profile.findByIdAndDelete(req.params.id, (error, profile) => {
-    if (error) {
-      res.status(400).json({ error: error.message });
-    }
-    res.status(200).json(profile);
+router.delete("/deleteAccount/:id", (req, res) => {
+  User.findByIdAndDelete(req.params.id, (error, user) => {
+    Profile.findOneAndDelete(
+      { owner: req.params.id },
+      (error, deletedProfile) => {
+        if (error) {
+          res.status(400).json({ error: error.message });
+        }
+        res.status(200).json(deletedProfile);
+      }
+    );
   });
 });
 
