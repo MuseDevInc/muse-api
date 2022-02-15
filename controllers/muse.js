@@ -2,9 +2,95 @@ const express = require("express");
 const router = express.Router();
 const Profile = require("../models/profile");
 const User = require("../models/user");
+/* const mongoose = require('mongoose') */
+//Fetch for discover
+//Show individual user page, (Maybe not Profile?)
+
+function isMatch(userProfId, swipedUserLikes) {
+  return swipedUserLikes.includes(userProfId);
+}
+
+router.get("/discover/getQueue", (req, res) => {
+  console.log("discover hit");
+  //return current user profile and return ids in swipedleft and swipedright arrays
+  Profile.findOne(
+    { owner: req.session.userId },
+    "swipedLeft swipedRight",
+    (error, swipedIds) => {
+      //callback executes and concatenates swipedLeft, SwipeRight, and user's profile id
+      let excludeIds = swipedIds.swipedLeft.concat(
+        swipedIds.swipedRight,
+        swipedIds.id
+      );
+      //return all profiles that have an id not included in "excludeIds"
+      Profile.find({ _id: { $nin: excludeIds } })
+      .populate("owner")
+      .then(discoverProfiles => {
+          console.log(discoverProfiles)
+          return res.status(200).json(discoverProfiles)})
+      .catch(error => res.status(400).json({error: error.message}))
+    }
+  );
+});
+
+//patch currentUser with swipe
+router.patch("/discover/swipe", (req, res) => {
+  let { swipeDirection, swipedUser } = req.body;
+  Profile.find(
+    { owner: req.session.userId },
+    { _id: 1 },
+    (error, profileId) => {
+      if (error) {
+        res.status(400).json({ error: err.message });
+      }
+      let profId = profileId[0]._id;
+      Profile.findByIdAndUpdate(
+        profId,
+        {
+          $push: { [`swiped${swipeDirection}`]: swipedUser },
+        },
+        { new: true },
+        (err, doc) => {
+          if (err) {
+            return res.status("400");
+          } else {
+            return res.status(200).json(doc);
+          }
+        }
+      );
+    }
+  );
+});
+//CHECK MATCH
+// Might be beneficial to have authUser's profile id in user schema, and if match update a "match" array in both users, so that other user can be notified of match. for stretch, we could notify user on login of new match using utc timecode of login or last session, and if match timecodes > user logout timecode, alert.
+
+router.post("/discover/checkmatch", (req, res) => {
+  const { swipedUser } = req.body;
+  Profile.find(
+    { owner: req.session.userId },
+    { _id: 1 },
+    (error, profileId) => {
+      if (error) {
+        res.status(400).json({ error: err.message });
+      }
+      let profId = profileId[0]._id;
+      Profile.findById(
+        swipedUser,
+        { swipedRight: 1 },
+        (error, swipedRightList) => {
+          if (error) {
+            res.status(400).json({ error: error.message });
+          }
+          console.log(swipedRightList);
+          let matchBoolean = isMatch(profId, swipedRightList.swipedRight);
+          return res.send(matchBoolean);
+        }
+      );
+    }
+  );
+});
 
 // USER PAGE
-
 router.get("/userPage", (req, res) => {
   console.log("Hello I got hit", req.session.userId);
   Profile.findOne({ owner: req.session.userId }, (error, profile) => {
