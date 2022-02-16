@@ -170,11 +170,10 @@ router.get("/:id", (req, res) => {
 });
 
 //Delete route
-//hello
-router.delete("/deleteAccount/:id", (req, res) => {
-  User.findByIdAndDelete(req.params.id, (error, user) => {
+router.delete("/deleteAccount", (req, res) => {
+  User.findByIdAndDelete(req.session.userId, (error, user) => {
     Profile.findOneAndDelete(
-      { owner: req.params.id },
+      { owner: req.session.userId },
       (error, deletedProfile) => {
         if (error) {
           res.status(400).json({ error: error.message });
