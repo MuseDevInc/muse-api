@@ -10,8 +10,8 @@ const MessageSchema = new mongoose.Schema({
     },
     text:{type:String},
 
-
-})
+//10:08
+},{timestamps:true})
 
 const Message = mongoose.model("Message", MessageSchema)
 
