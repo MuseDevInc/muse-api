@@ -118,6 +118,23 @@ router.get("/userPage", (req, res) => {
   //     })
   // })
 });
+
+
+router.get("/getUsers/:id", (req, res) => {
+  User.findById(req.params.id, (error, user) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+    }
+    //return specifc "User" by id
+    res.status(200).json(user);
+  });
+});
+
+
+
+
+
+
 // Page where User who has signed up creates their profile. This is not a register page.
 router.post("/userCreationPage", (req, res) => {
   console.log(req.session);
