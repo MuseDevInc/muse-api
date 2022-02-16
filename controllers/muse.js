@@ -170,7 +170,7 @@ router.get("/:id", (req, res) => {
 });
 
 //Delete route
-router.delete("/deleteAccount/:id", (req, res) => {
+router.delete("/deleteAccount", (req, res) => {
   User.findByIdAndDelete(req.session.userId, (error, user) => {
     Profile.findOneAndDelete(
       { owner: req.session.userId },
