@@ -64,7 +64,7 @@ router.post('/register', async (req,res,next) => {
 })
 
 //LOG OUT
-router.get('/logout', (req,res) => {
+router.delete('/logout', (req,res) => {
     req.session.destroy( err => {
         if(err) {
             return res.status(400).json({message: err.message})
