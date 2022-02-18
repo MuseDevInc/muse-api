@@ -102,37 +102,24 @@ router.get("/userPage", (req, res) => {
     //return profile as json
     return res.status(200).json(profile);
   });
-  // User.findById(req.session.userId, (error, user) => {
-  //     if (error) {
-  //         res.status(400).json({ error: error.message })
-  //         next()
-  //     }
-  //     Profile.find({owner: req.session.userId}, (error, profile) => {
-  //         if (error) {
-  //             res.status(400).json({ error: error.message })
-  //             next()
-  //         }
-  //         //return profile as json
-  //       return res.status(200).json(profile)
-
-  //     })
-  // })
 });
 
 
 router.get("/getUsers/:id", (req, res) => {
-  User.findById(req.params.id, (error, user) => {
-    if (error) {
-      res.status(400).json({ error: error.message });
-    }
-    //return specifc "User" by id
-    res.status(200).json(user);
-  });
+
+  Profile.findOne({ owner: req.params.id })
+      .populate("owner")
+      .then(userProfile=> {
+          return res.status(200).json(userProfile)})
+      .catch(error => res.status(400).json({error: error.message}))
+  // User.findById(req.params.id, (error, user) => {
+  //   if (error) {
+  //     res.status(400).json({ error: error.message });
+  //   }
+  //   //return specifc "User" by id
+  //   res.status(200).json(user);
+  // });
 });
-
-
-
-
 
 
 // Page where User who has signed up creates their profile. This is not a register page.
