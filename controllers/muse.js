@@ -118,7 +118,7 @@ router.get("/getUsers/:id", (req, res) => {
 
 // Page where User who has signed up creates their profile. This is not a register page.
 router.post("/userCreationPage", (req, res) => {
-  console.log(req.session);
+  console.log(ObjectId(req.session.userId));
   User.findById(ObjectId(req.session.userId), (err, user) => {
     console.log(user);
     if (err) {
