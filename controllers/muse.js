@@ -1,4 +1,5 @@
 const express = require("express");
+const ObjectID = require('mongodb').ObjectID
 const router = express.Router();
 const Profile = require("../models/profile");
 const User = require("../models/user");
@@ -131,9 +132,9 @@ router.post("/userCreationPage", (req, res) => {
     }
     let profileToCreate = {
       ...req.body,
-      owner: req.session.userId,
+      owner: ObjectID(req.session.userId),
     };
-    // console.log(profileToCreate);
+    console.log(profileToCreate);
 
     Profile.create(profileToCreate, (error, createdProfile) => {
       if (error) {
