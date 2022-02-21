@@ -1,5 +1,5 @@
 const express = require("express");
-const ObjectID = require('mongodb').ObjectID
+const ObjectId = require('mongodb').ObjectId
 const router = express.Router();
 const Profile = require("../models/profile");
 const User = require("../models/user");
@@ -113,13 +113,6 @@ router.get("/getUsers/:id", (req, res) => {
       .then(userProfile=> {
           return res.status(200).json(userProfile)})
       .catch(error => res.status(400).json({error: error.message}))
-  // User.findById(req.params.id, (error, user) => {
-  //   if (error) {
-  //     res.status(400).json({ error: error.message });
-  //   }
-  //   //return specifc "User" by id
-  //   res.status(200).json(user);
-  // });
 });
 
 
@@ -132,7 +125,7 @@ router.post("/userCreationPage", (req, res) => {
     }
     let profileToCreate = {
       ...req.body,
-      owner: ObjectID(req.session.userId),
+      owner: user._id,
     };
     console.log(profileToCreate);
 
