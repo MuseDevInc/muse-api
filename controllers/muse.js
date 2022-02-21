@@ -11,11 +11,11 @@ function isMatch(userProfId, swipedUserLikes) {
   return swipedUserLikes.includes(userProfId);
 }
 
-router.get("/discover/getQueue", (req, res) => {
+router.get("/discover/getQueue/:userId", (req, res) => {
   console.log("discover hit");
   //return current user profile and return ids in swipedleft and swipedright arrays
   Profile.findOne(
-    { owner: ObjectId(req.session.userId) },
+    { owner: req.params.userId},
     "swipedLeft swipedRight",
     (error, swipedIds) => {
       //callback executes and concatenates swipedLeft, SwipeRight, and user's profile id
