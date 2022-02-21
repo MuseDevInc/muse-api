@@ -17,25 +17,21 @@ router.get("/discover/getQueue/:userId", (req, res) => {
   //return current user profile and return ids in swipedleft and swipedright arrays
   Profile.findOne(
     { owner: req.params.userId},
-    (err, profile) => {
-      console.log(profile);
+    "swipedLeft swipedRight",
+    (error, swipedIds) => {
+      //callback executes and concatenates swipedLeft, SwipeRight, and user's profile id
+      let excludeIds = swipedIds.swipedLeft.concat(
+        swipedIds.swipedRight,
+        swipedIds.id
+      );
+      //return all profiles that have an id not included in "excludeIds"
+      Profile.find({ _id: { $nin: excludeIds } })
+      .populate("owner")
+      .then(discoverProfiles => {
+          console.log(discoverProfiles)
+          return res.status(200).json(discoverProfiles)})
+      .catch(error => res.status(400).json({error: error.message}))
     }
-
-    // "swipedLeft swipedRight",
-    // (error, swipedIds) => {
-    //   //callback executes and concatenates swipedLeft, SwipeRight, and user's profile id
-    //   let excludeIds = swipedIds.swipedLeft.concat(
-    //     swipedIds.swipedRight,
-    //     swipedIds.id
-    //   );
-    //   //return all profiles that have an id not included in "excludeIds"
-    //   Profile.find({ _id: { $nin: excludeIds } })
-    //   .populate("owner")
-    //   .then(discoverProfiles => {
-    //       console.log(discoverProfiles)
-    //       return res.status(200).json(discoverProfiles)})
-    //   .catch(error => res.status(400).json({error: error.message}))
-    // }
   );
 });
 
