@@ -36,10 +36,10 @@ router.get("/discover/getQueue/:userId", (req, res) => {
 });
 
 //patch currentUser with swipe ...
-router.patch("/discover/swipe", (req, res) => {
+router.patch("/discover/swipe/:userId", (req, res) => {
   let { swipeDirection, swipedUser } = req.body;
   Profile.find(
-    { owner: ObjectId(req.session.userId) },
+    { owner: req.params.userId },
     { _id: 1 },
     (error, profileId) => {
       if (error) {
@@ -66,10 +66,10 @@ router.patch("/discover/swipe", (req, res) => {
 //CHECK MATCH
 // Might be beneficial to have authUser's profile id in user schema, and if match update a "match" array in both users, so that other user can be notified of match. for stretch, we could notify user on login of new match using utc timecode of login or last session, and if match timecodes > user logout timecode, alert.
 
-router.post("/discover/checkmatch", (req, res) => {
+router.post("/discover/checkmatch/:userId", (req, res) => {
   const { swipedUser } = req.body;
   Profile.find(
-    { owner: ObjectId(req.session.userId) },
+    { owner: req.params.userId },
     { _id: 1 },
     (error, profileId) => {
       if (error) {
@@ -93,9 +93,9 @@ router.post("/discover/checkmatch", (req, res) => {
 });
 
 // USER PAGE
-router.get("/userPage", (req, res) => {
-  console.log("Hello I got hit", req.session.userId);
-  Profile.findOne({ owner: req.session.userId}, (error, profile) => {
+router.get("/userPage/:userId", (req, res) => {
+  console.log("Hello I got hit", req.params.userId);
+  Profile.findOne({ owner: req.params.userId}, (error, profile) => {
     console.log(error, profile);
     if (error) {
       res.status(400).json({ error: error.message });
@@ -108,7 +108,6 @@ router.get("/userPage", (req, res) => {
 
 
 router.get("/getUsers/:id", (req, res) => {
-
   Profile.findOne({ owner: req.params.id })
       .populate("owner")
       .then(userProfile=> {
@@ -153,10 +152,10 @@ router.get("/:id", (req, res) => {
 });
 
 //Delete route
-router.delete("/deleteAccount", (req, res) => {
-  User.findByIdAndDelete(ObjectId(req.session.userId), (error, user) => {
+router.delete("/deleteAccount/userId", (req, res) => {
+  User.findByIdAndDelete(req.params.userId, (error, user) => {
     Profile.findOneAndDelete(
-      { owner: ObjectId(req.session.userId) },
+      { owner: req.params.userId },
       (error, deletedProfile) => {
         if (error) {
           res.status(400).json({ error: error.message });
@@ -169,14 +168,14 @@ router.delete("/deleteAccount", (req, res) => {
 
 //Update route
 
-router.put("/editProfile", (req, res) => {
-  User.findById(ObjectId(req.session.userId), (error, user) => {
+router.put("/editProfile/:userId", (req, res) => {
+  User.findById(req.params.userId, (error, user) => {
     let profileToEdit = {
       ...req.body,
-      owner: ObjectId(req.session.userId),
+      owner: req.params.userId,
     };
     Profile.findOneAndUpdate(
-      { owner: ObjectId(req.session.userId) },
+      { owner: req.params.userId},
       req.body,
       { new: true },
       (error, updatedProfile) => {
