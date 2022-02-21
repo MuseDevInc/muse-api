@@ -122,15 +122,15 @@ router.get("/getUsers/:id", (req, res) => {
 
 
 // Page where User who has signed up creates their profile. This is not a register page.
-router.post("/userCreationPage", (req, res) => {
-  console.log(ObjectId(req.session.userId));
-  User.findById(ObjectId(req.session.userId), (err, user) => {
+router.post("/userCreationPage/:userId", (req, res) => {
+  console.log(req.params);
+  User.findById(req.params.userId, (err, user) => {
     console.log(user);
     if (err) {
     }
     let profileToCreate = {
       ...req.body,
-      owner: ObjectId(req.session.userId),
+      owner: req.params.userId,
     };
     console.log(profileToCreate);
 
