@@ -30,6 +30,9 @@ app.use(session({
     secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+        secure: true
+    }
 }))
 
 // app.use(express.static('public'))
