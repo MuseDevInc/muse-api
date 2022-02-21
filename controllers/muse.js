@@ -134,6 +134,7 @@ router.post("/userCreationPage", (req, res) => {
         return res.status(400).json({ error: error.message });
       }
       //return "Profile" info
+      console.log(createdProfile);
       return res.status(200).json(createdProfile);
     });
   });
