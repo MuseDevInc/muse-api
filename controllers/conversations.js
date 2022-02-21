@@ -4,10 +4,10 @@ const Conversation = require('../models/conversation')
 
 //Create new conversation
 
-router.post('/', async (req,res) => {
+router.post('/:userId', async (req,res) => {
     
     const newConversation = new Conversation({
-        members: [req.session.userId, req.body.otherUserId]
+        members: [req.params.userId, req.body.otherUserId]
     })
 
     try{
