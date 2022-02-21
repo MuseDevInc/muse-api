@@ -13,6 +13,7 @@ function isMatch(userProfId, swipedUserLikes) {
 
 router.get("/discover/getQueue/:userId", (req, res) => {
   console.log("discover hit");
+  console.log(req.params);
   //return current user profile and return ids in swipedleft and swipedright arrays
   Profile.findOne(
     { owner: req.params.userId},
@@ -34,7 +35,7 @@ router.get("/discover/getQueue/:userId", (req, res) => {
   );
 });
 
-//patch currentUser with swipe
+//patch currentUser with swipe ...
 router.patch("/discover/swipe", (req, res) => {
   let { swipeDirection, swipedUser } = req.body;
   Profile.find(
