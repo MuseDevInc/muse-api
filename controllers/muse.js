@@ -120,12 +120,12 @@ router.get("/getUsers/:id", (req, res) => {
 router.post("/userCreationPage", (req, res) => {
   console.log(req.session);
   User.findById(req.session.userId, (err, user) => {
-    console.log(req.body);
+    console.log(user);
     if (err) {
     }
     let profileToCreate = {
       ...req.body,
-      owner: user._id,
+      owner: user.id,
     };
     console.log(profileToCreate);
 
