@@ -16,7 +16,7 @@ router.get("/discover/getQueue/:userId", (req, res) => {
   console.log(req.params);
   //return current user profile and return ids in swipedleft and swipedright arrays
   Profile.findOne(
-    { owner: req.params.userId},
+    { owner: ObjectId(req.params.userId)},
     (err, profile) => {
       console.log(profile);
     }
