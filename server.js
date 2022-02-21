@@ -13,7 +13,7 @@ const messageController = require('./controllers/messages')
 const spotifyPingController = require('./controllers/spotifyPing')
 
 const corsOptions = {
-    origin: ['http://localhost:3000','https://muse-dev.herokuapp.com','https://muse-dev.herokuapp.com/*'],
+    origin: ['http://localhost:3000','https://muse-dev.herokuapp.com','https://muse-dev.herokuapp.com/*', '*'],
     methods: "GET,PUT,PATCH,POST,DELETE",
     credentials: true,
 }
