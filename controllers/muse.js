@@ -15,7 +15,7 @@ router.get("/discover/getQueue", (req, res) => {
   console.log("discover hit");
   //return current user profile and return ids in swipedleft and swipedright arrays
   Profile.findOne(
-    { owner: req.session.userId },
+    { owner: ObjectId(req.session.userId) },
     "swipedLeft swipedRight",
     (error, swipedIds) => {
       //callback executes and concatenates swipedLeft, SwipeRight, and user's profile id
@@ -38,7 +38,7 @@ router.get("/discover/getQueue", (req, res) => {
 router.patch("/discover/swipe", (req, res) => {
   let { swipeDirection, swipedUser } = req.body;
   Profile.find(
-    { owner: req.session.userId },
+    { owner: ObjectId(req.session.userId) },
     { _id: 1 },
     (error, profileId) => {
       if (error) {
@@ -68,7 +68,7 @@ router.patch("/discover/swipe", (req, res) => {
 router.post("/discover/checkmatch", (req, res) => {
   const { swipedUser } = req.body;
   Profile.find(
-    { owner: req.session.userId },
+    { owner: ObjectId(req.session.userId) },
     { _id: 1 },
     (error, profileId) => {
       if (error) {
@@ -94,7 +94,7 @@ router.post("/discover/checkmatch", (req, res) => {
 // USER PAGE
 router.get("/userPage", (req, res) => {
   console.log("Hello I got hit", req.session.userId);
-  Profile.findOne({ owner: req.session.userId }, (error, profile) => {
+  Profile.findOne({ owner: ObjectId(req.session.userId)}, (error, profile) => {
     console.log(error, profile);
     if (error) {
       res.status(400).json({ error: error.message });
@@ -108,7 +108,7 @@ router.get("/userPage", (req, res) => {
 
 router.get("/getUsers/:id", (req, res) => {
 
-  Profile.findOne({ owner: req.params.id })
+  Profile.findOne({ owner: ObjectId(req.session.userId) })
       .populate("owner")
       .then(userProfile=> {
           return res.status(200).json(userProfile)})
@@ -119,13 +119,13 @@ router.get("/getUsers/:id", (req, res) => {
 // Page where User who has signed up creates their profile. This is not a register page.
 router.post("/userCreationPage", (req, res) => {
   console.log(req.session);
-  User.findById(req.session.userId, (err, user) => {
+  User.findById(ObjectId(req.session.userId), (err, user) => {
     console.log(user);
     if (err) {
     }
     let profileToCreate = {
       ...req.body,
-      owner: user.id,
+      owner: ObjectId(req.session.userId),
     };
     console.log(profileToCreate);
 
@@ -152,9 +152,9 @@ router.get("/:id", (req, res) => {
 
 //Delete route
 router.delete("/deleteAccount", (req, res) => {
-  User.findByIdAndDelete(req.session.userId, (error, user) => {
+  User.findByIdAndDelete(ObjectId(req.session.userId), (error, user) => {
     Profile.findOneAndDelete(
-      { owner: req.session.userId },
+      { owner: ObjectId(req.session.userId) },
       (error, deletedProfile) => {
         if (error) {
           res.status(400).json({ error: error.message });
@@ -168,13 +168,13 @@ router.delete("/deleteAccount", (req, res) => {
 //Update route
 
 router.put("/editProfile", (req, res) => {
-  User.findById(req.session.userId, (error, user) => {
+  User.findById(ObjectId(req.session.userId), (error, user) => {
     let profileToEdit = {
       ...req.body,
-      owner: req.session.userId,
+      owner: ObjectId(req.session.userId),
     };
     Profile.findOneAndUpdate(
-      { owner: req.session.userId },
+      { owner: ObjectId(req.session.userId) },
       req.body,
       { new: true },
       (error, updatedProfile) => {
