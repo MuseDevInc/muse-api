@@ -4,12 +4,8 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-<!-- PROJECT LOGO -->
+<!-- PROJECT HEADER -->
 <br />
-<!-- <div align="center">
-  <a href="https://github.com/cdizon239/trip-bucket">
-    <img src="./public/images/favicon.png" alt="Logo" width="80" height="80">
-  </a> -->
 
 <h1 align="center">Muse API</h1>
 
